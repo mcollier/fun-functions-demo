@@ -27,6 +27,10 @@
         "sourceCodeBranch": {
             "type": "string",
             "defaultValue": "master"
+        },
+        "sourceCodeProject": {
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {
@@ -63,15 +67,7 @@
             "kind": "functionapp",
             "properties": {
                 "name": "[variables('functionAppName')]",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
-                "siteConfig": {
-                    "appsettings": [
-                        {
-                            "name": "Project",
-                            "value": "function-app-create-dynamic/mcollier-fun-funct"
-                        }
-                    ]
-                }
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
@@ -90,7 +86,11 @@
                     "properties": {
                         "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
                         "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
-                        "FUNCTIONS_EXTENSION_VERSION": "latest"
+                        "FUNCTIONS_EXTENSION_VERSION": "latest",
+                        "WEBSITE_CONTENTSHARE": "[toLower(variables('functionAppName'))]",
+                        "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
+                        "WEBSITE_NODE_DEFAULT_VERSION": "6.5.0",
+                        "PROJECT": "[parameters('sourceCodeProject')]"
                     }
                 },
                 {
@@ -103,7 +103,7 @@
                     "properties": {
                         "RepoUrl": "[parameters('sourceCodeRepositoryUrl')]",
                         "branch": "[parameters('sourceCodeBranch')]",
-                        "IsManualIntegration": true
+                        "IsManualIntegration": false
                     }
                 }
             ]
