@@ -1,0 +1,11 @@
+{
+  "name": "function-demo",
+  "version": "1.0.0",
+  "description": "this is just a demo thing",
+   "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "request": "2.81.0"
+  }
+}
+
