@@ -90,7 +90,12 @@
                         "WEBSITE_CONTENTSHARE": "[toLower(variables('functionAppName'))]",
                         "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
                         "WEBSITE_NODE_DEFAULT_VERSION": "6.5.0",
-                        "PROJECT": "[parameters('sourceCodeProject')]"
+                        "PROJECT": "[parameters('sourceCodeProject')]",
+                        "TwilioAccountSid": "your-twilio-account-sid-here",
+                        "TwilioAuthToken": "your-twilio-auth-token-here",
+                        "TwilioPhoneNumber": "your-twilio-phone-number-here",
+                        "MyPhoneNumber": "your-phone-number-here",
+                        "WeatherUndergroundAPIKey": "your-weather-underground-api-key-here"
                     }
                 },
                 {
